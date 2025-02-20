@@ -1,13 +1,16 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.tokens import AccessToken,RefreshToken
 from .serializers import (
     LoginSerializer,
     SignupSerializer
 )
 # Create your views here.
 class LoginView(APIView):
+    authentication_classes = []
+    permission_classes = []
+
     def post(self, request):
         request_body = LoginSerializer(data=request.data, context={"request":request})
         if not request_body.is_valid():
@@ -15,11 +18,8 @@ class LoginView(APIView):
                 {"error":"Invalid data received","message":"Please fill up the missing fields"},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        # token, created = Token.objects.create(user=request_body.validated_data['user'])
-        # if not created:
-        #     raise Exception()
-        
-        return Response({"data":{}}, status=status.HTTP_200_OK)
+        token = AccessToken.for_user(request_body.validated_data.get("user"))
+        return Response({"data":{"token": str(token)}}, status=status.HTTP_200_OK)
 
 
 class SignupView(APIView):
