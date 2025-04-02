@@ -15,7 +15,7 @@ class LoginView(APIView):
         request_body = LoginSerializer(data=request.data, context={"request":request})
         if not request_body.is_valid():
             return Response(
-                {"error":"Invalid data received","message":"Please fill up the missing fields"},
+                {"error":"Invalid data received","details":request_body.errors},
                 status=status.HTTP_400_BAD_REQUEST
             )
         token = AccessToken.for_user(request_body.validated_data.get("user"))
@@ -30,7 +30,7 @@ class SignupView(APIView):
         request_body = SignupSerializer(data=request.data)
         if not request_body.is_valid():
             return Response(
-                {"error":"Invalid data received","message":"Please fill up the missing fields"},
+                {"error":"Invalid data received","details":request_body.errors},
                 status=status.HTTP_400_BAD_REQUEST
             )
         request_body.save()
