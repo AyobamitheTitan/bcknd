@@ -23,6 +23,9 @@ class LoginView(APIView):
 
 
 class SignupView(APIView):
+    authentication_classes = []
+    permission_classes = []
+
     def post(self, request):
         request_body = SignupSerializer(data=request.data)
         if not request_body.is_valid():
