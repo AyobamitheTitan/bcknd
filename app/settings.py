@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'rest_framework',
     "rest_framework_simplejwt",
     "drf_yasg",
-    "authentication"
+    "authentication",
+    "bins"
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'app.urls'
@@ -96,6 +98,8 @@ DATABASES = {
         "PORT":os.getenv("DATABASE_PORT")
     }
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Password validation
