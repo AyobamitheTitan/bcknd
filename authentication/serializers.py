@@ -44,6 +44,6 @@ class SignupSerializer(serializers.ModelSerializer):
         password = validated_data.pop('password')
         validated_data['password'] = make_password(password)
         validated_data["id"] = uuid4()
-        # TODO: Need a more effective way of assigning usernames
+        # TODO: Use the email without everything after the @
         validated_data["username"] = validated_data.get("first_name")
         return UserModel.objects.create(**validated_data)
