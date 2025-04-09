@@ -100,7 +100,7 @@ DATABASES = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
-
+DROPBOX_ACCESS_TOKEN=os.getenv("DROPBOX_ACCESS_TOKEN")
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
