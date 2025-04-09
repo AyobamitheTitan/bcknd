@@ -1,7 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.tokens import (
+    AccessToken,
+    RefreshToken
+)
 from .serializers import (
     LoginSerializer,
     SignupSerializer
@@ -15,7 +18,8 @@ class LoginView(APIView):
         request_body = LoginSerializer(data=request.data, context={"request":request})
         request_body.is_valid(raise_exception=True)
         token = AccessToken.for_user(request_body.validated_data.get("user"))
-        return Response({"data":{"token": str(token)},"message":"Successful"}, status=status.HTTP_200_OK)
+        refresh_token = RefreshToken.for_user(request_body.validated_data.get("user"))
+        return Response({"data":{"token": str(token), "refresh_token":str(refresh_token)},"message":"Successful"}, status=status.HTTP_200_OK)
 
 
 class SignupView(APIView):
