@@ -23,7 +23,7 @@ class BinSerializer(serializers.ModelSerializer):
 class BinLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = BinLocationModel
-        fields = ("location","city","state","capacity")
+        fields = ("location","city","state","capacity", "longitude","latitude")
 
     def validate(self, attrs):
         attrs["location"] = attrs["location"].capitalize().strip()
