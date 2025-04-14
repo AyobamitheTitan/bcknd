@@ -5,6 +5,8 @@ from django.db import models
 class BinLocationModel(models.Model):
     id = models.BigAutoField(primary_key=True)
     location = models.CharField(max_length=100)
+    longitude = models.FloatField(null=False, default=0.0)
+    latitude = models.FloatField(null=False, default=0.0)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     capacity = models.IntegerField()
