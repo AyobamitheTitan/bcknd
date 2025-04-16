@@ -14,7 +14,7 @@ from rest_framework import status
 
 def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
-
+    print(exc)
     if isinstance(exc, ConnectionError):
         return Response({
             "error":"Connection Timeout",
