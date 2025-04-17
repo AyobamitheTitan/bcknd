@@ -47,3 +47,10 @@ class SignupSerializer(serializers.ModelSerializer):
         # TODO: Use the email without everything after the @
         validated_data["username"] = validated_data.get("first_name")
         return UserModel.objects.create(**validated_data)
+    
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserModel
+        fields = ("first_name","last_name","email","phone_number")
