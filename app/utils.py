@@ -7,6 +7,7 @@ from rest_framework.exceptions import (
     NotAuthenticated,
     ValidationError,
     MethodNotAllowed,
+    NotFound
 )
 from dropbox.exceptions import AuthError
 from rest_framework_simplejwt.exceptions import InvalidToken
@@ -14,7 +15,7 @@ from rest_framework import status
 
 def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
-    print(exc)
+    print(exc, type(exc))
     if isinstance(exc, ConnectionError):
         return Response({
             "error":"Connection Timeout",
@@ -33,6 +34,15 @@ def custom_exception_handler(exc, context):
             },
             status=status.HTTP_400_BAD_REQUEST
         )
+    if isinstance(exc, NotFound):
+        return Response({
+            "error":"Not Found",
+            "details":{
+                str(exc).split(" ")[0].lower():[str(exc)]
+            },
+        },
+        status=status.HTTP_404_NOT_FOUND
+    )
     if isinstance(exc, NotAuthenticated):
         return Response({
             "error":"Not authenticated",
@@ -70,7 +80,9 @@ def custom_exception_handler(exc, context):
     if issubclass(type(exc), ObjectDoesNotExist):
         return Response({
             "error":"Not found",
-            "details":{str(exc)}
+            "details":{
+                str(exc).split(" ")[0].lower():[str(exc)]
+            }
         },
             status=status.HTTP_404_NOT_FOUND
     )
