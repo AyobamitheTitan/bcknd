@@ -3,12 +3,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.views import exception_handler
 from rest_framework.response import Response
 from rest_framework.exceptions import (
-    APIException,
     ParseError, 
     NotAuthenticated,
     ValidationError,
     MethodNotAllowed,
 )
+from dropbox.exceptions import AuthError
 from rest_framework_simplejwt.exceptions import InvalidToken
 from rest_framework import status
 
@@ -50,6 +50,15 @@ def custom_exception_handler(exc, context):
             }
         },
         status=status.HTTP_401_UNAUTHORIZED
+    )
+    if isinstance(exc, AuthError):
+        return Response({
+            "error":"Invalid dropbox token",
+            "details":{
+                "token":"The dropbox token has expired. Please inform the backend developer to generate a new one"
+            }
+        },
+        status=status.HTTP_500_INTERNAL_SERVER_ERROR
     )
     if isinstance(exc, ValidationError):
         return Response({
