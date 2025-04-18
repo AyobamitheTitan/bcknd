@@ -101,6 +101,10 @@ DATABASES = {
 
 CORS_ORIGIN_ALLOW_ALL = True
 DROPBOX_ACCESS_TOKEN=os.getenv("DROPBOX_ACCESS_TOKEN")
+DROPBOX_AUTH_CODE=os.getenv("DROPBOX_AUTH_CODE")
+DROPBOX_APP_KEY=os.getenv("DROPBOX_APP_KEY")
+DROPBOX_REFRESH_TOKEN=os.getenv("DROPBOX_REFRESH_TOKEN")
+DROPBOX_APP_SECRET=os.getenv("DROPBOX_APP_SECRET")
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
