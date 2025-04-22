@@ -22,4 +22,4 @@ class UserModel(AbstractBaseUser):
     USERNAME_FIELD = "username"
 
     def __str__(self):
-        return f"User [ id: {self.id}, email: {self.email}]"
+        return f"User [ id: {self.id}, email: {self.email} ]"
