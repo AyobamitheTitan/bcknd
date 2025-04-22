@@ -25,8 +25,9 @@ class BinView(APIView):
         bin_image_url = dbx_service.store_file(request.data["bin_image"])
         new_bin = BinSerializer(data={
             "location":request_body.data["location_id"],
-            "bin_url":bin_image_url,
-            "emptied_at":request_body.data["emptied_at"]
+            "bin_url":"bin_image_url",
+            "emptied_at":request_body.data["emptied_at"],
+            "uploaded_by": request.user.id
         })
         new_bin.is_valid(raise_exception=True)
         new_bin.save()
@@ -59,5 +60,5 @@ class BinLocationView(APIView):
     
 
     def get(self, request):
-        bins = BinLocationModel.objects.all().values()
-        return Response({"data":bins,"message":"Successful"})
+        locations = BinLocationModel.objects.all().values()
+        return Response({"data":locations,"message":"Successful"})
