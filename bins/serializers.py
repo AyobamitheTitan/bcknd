@@ -12,7 +12,7 @@ class AddBinSerializer(serializers.Serializer):
 class BinSerializer(serializers.ModelSerializer):
     class Meta:
         model = BinModel
-        fields = ("location", "bin_url", "emptied_at")
+        fields = ("location", "bin_url", "emptied_at", "uploaded_by")
     
 
     def create(self, validated_data):
