@@ -1,4 +1,5 @@
 from django.db import models
+from authentication.models import UserModel
 
 # Create your models here.
 
@@ -20,3 +21,10 @@ class BinModel(models.Model):
     )
     bin_url = models.CharField(max_length=150, default=None)
     emptied_at = models.DateTimeField(null=True)
+    uploaded_by = models.ForeignKey(
+        UserModel,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="bins"
+    )
