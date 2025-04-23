@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, F
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
@@ -39,7 +39,23 @@ class BinView(APIView):
 
 
     def get(self, request):
-        bins = BinModel.objects.all().values()
+        bins = BinModel.objects.annotate(
+            location_name=F("location__location"),
+            location_capacity=F("location__capacity"),
+            city=F("location__city"),
+            state=F("location__state"),
+            location_date_created=F("location__date_created")
+        ).values(
+            "id",
+            "location",
+            "bin_url",
+            "emptied_at",
+            "uploaded_by",
+            "location_name",
+            "location_capacity",
+            "city",
+            "location_date_created"
+        )
         return Response({"data":bins,"message":"Successful"})
     
 
@@ -56,7 +72,7 @@ class BinLocationView(APIView):
             raise ValidationError(detail={"location":["This location has already been added"]}, code=status.HTTP_400_BAD_REQUEST)
 
         request_body.save()
-        return Response({"data":request_body.data, "message":"New location added"}, status=status.HTTP_201_CREATED)
+        return Response({"data":request_body.validated_data, "message":"New location added"}, status=status.HTTP_201_CREATED)
     
 
     def get(self, request):
