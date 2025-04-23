@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models
 from authentication.models import UserModel
 
@@ -11,6 +12,7 @@ class BinLocationModel(models.Model):
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     capacity = models.IntegerField()
+    date_created = models.DateTimeField(default=datetime.now)
 
 class BinModel(models.Model):
     id = models.UUIDField(primary_key=True)
