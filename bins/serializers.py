@@ -1,4 +1,5 @@
 from uuid import uuid4
+from random import randint
 from rest_framework import serializers
 
 from .models import BinModel, BinLocationModel
@@ -31,3 +32,7 @@ class BinLocationSerializer(serializers.ModelSerializer):
         attrs["state"] = attrs["state"].strip().capitalize()
 
         return attrs
+    
+    def create(self, validated_data):
+        validated_data["id"] = randint(90, 569125)
+        return super().create(validated_data)
