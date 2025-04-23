@@ -5,8 +5,6 @@
 pip install -r requirements.txt
 
 # Make new migrations
-python manage.py makemigrations
-python manage.py makemigrations bins
 
 # Apply any outstanding database migrations
 python manage.py migrate
